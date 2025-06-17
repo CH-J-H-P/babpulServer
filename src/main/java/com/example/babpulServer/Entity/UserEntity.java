@@ -1,6 +1,6 @@
 package com.example.babpulServer.Entity;
 
-import com.example.babpulServer.DTO.UserDTO;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -54,9 +54,9 @@ public class UserEntity {
     private role userRole;
 
     public enum role {
-        사장,
-        기부자,
-        밥풀이
+        owner,
+        contributor,
+        babpul
     }
 }
 
