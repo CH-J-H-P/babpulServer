@@ -11,16 +11,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-    private long userKey;
-    private String name;
-    private String email;
+    private long userKey; // 기본키
+    private String name; // 이름
+    private String email; // 이메일
     private String id;
     private String pw;
-    private String gender;
-    private LocalDate birthDate;
-    private String phoneNumber;
-    private String nickname;
-    private UserEntity.role userRole;
+    private String gender; // 성별
+    private LocalDate birthDate; // 생년월일
+    private String phoneNumber; // 휴대전화 번호
+    private String nickname; // 닉네임
+    private UserEntity.role userRole; // 역할
 
     // DTO-> Entity 변환 메서드
     public UserEntity toUserEntity() {

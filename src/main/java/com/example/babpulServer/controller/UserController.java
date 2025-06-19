@@ -28,6 +28,7 @@ public class UserController {
     private final UserService userService;
     private final UserSessionService userSessionService;
 
+    // 회원가입 로직
     @PostMapping("/user/singup")
     public ResponseEntity<Void> signup(@RequestBody UserDTO userDTO){
         if(userDTO == null){ // case: null로 요청시(변환 실패, 요청 본문 빔 등등), do: 400 Bad Request
@@ -39,6 +40,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    // 로그인 로직
     @PostMapping("user/login")
     public ResponseEntity<Void> login(@RequestBody UserDTO userDTO, HttpSession session,
                                       HttpServletResponse response){
@@ -60,6 +62,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    // 로그아웃 로직
     @PostMapping("/user/logout")
     public ResponseEntity<Void> logout(@RequestBody UserSessionDTO userSessionDTO){
         userService.logout(userSessionDTO.getSessionKey());

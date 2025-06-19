@@ -17,14 +17,14 @@ import java.time.LocalDate;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userKey;
+    private Long userKey; // 기본키
 
     @Column(nullable = false, length = 50)
-    private String name;
+    private String name; // 이름
 
     // xxxxxx@emain.com 형식
     @Column(nullable = false, length = 50)
-    private String email;
+    private String email; // 이메일
 
     @Column(nullable = false, length = 15)
     private String id;
@@ -33,22 +33,22 @@ public class UserEntity {
     private String pw;
 
     @Column(nullable = false, length = 10)
-    private String gender;
+    private String gender; // 성별(남, 여)
 
     // yyyy-MM-dd 형식
     @Column(nullable = false, length = 10)
-    private LocalDate birthDate;
+    private LocalDate birthDate; // 생년월일
 
     // xxx-xxxx-xxxx 형식
     @Column(nullable = false, length = 13)
-    private String phoneNumber;
+    private String phoneNumber; // 휴대전화 번호
 
     @Column(nullable = false, length = 8)
-    private String nickname;
+    private String nickname; // 닉네임
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private role userRole;
+    private role userRole; // 유저역할
 
     public enum role {
         donor,

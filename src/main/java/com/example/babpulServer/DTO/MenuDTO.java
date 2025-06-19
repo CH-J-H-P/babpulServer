@@ -10,17 +10,17 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuDTO {
-    private Long menuKey;
-    private String menuName;
-    private String menuDescription;
-    private int menuPrice;
-    private Long restaurantKey;
+    private Long menuKey; // 메뉴키
+    private String menuName; //메뉴명
+    private String menuDescription; // 메뉴설명
+    private int menuPrice; // 메뉴 가격
+    private Long restaurant; // 식당 기본키
 
 
     // DTO → Entity 변환 메서드
     public MenuEntity toEntity() {
         RestaurantEntity restaurant = RestaurantEntity.builder()
-                .restaurantKey(this.restaurantKey)
+                .restaurantKey(this.restaurant)
                 .build();
 
         return MenuEntity.builder()

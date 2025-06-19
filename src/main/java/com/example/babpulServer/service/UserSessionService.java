@@ -43,6 +43,7 @@ public class UserSessionService {
         userSessionRepository.save(userSessionEntity);
     }
 
+    // 로그아웃 로직
     public void logout(String sessionKey) {
         Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(sessionKey);
         if(userSessionEntity.isPresent()){ // case: 해당 세션키의 정보가 있음, do: 해당 정보 삭제

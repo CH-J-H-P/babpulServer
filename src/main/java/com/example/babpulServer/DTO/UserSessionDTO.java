@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserSessionDTO {
-    private String sessionKey;
+    private String sessionKey; // 유저와 주고받을 세션정보
 }
 
