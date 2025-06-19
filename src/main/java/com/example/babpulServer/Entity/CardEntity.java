@@ -24,7 +24,7 @@ public class CardEntity {
 
     // 카드 소유 유저(외래키)
     @ManyToOne(fetch = FetchType.LAZY) // 지연로딩 옵션(필요할 때만 불러옴)
-    @JoinColumn(nullable = false) // 외래키 옵션
+    @JoinColumn(name = "userKey", nullable = false) // 외래키 옵션
     private UserEntity user; // 유저 정보 그 자체를 가져온다
 
     // 유효기간(mm/yy)

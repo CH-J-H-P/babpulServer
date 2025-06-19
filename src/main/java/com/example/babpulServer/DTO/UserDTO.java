@@ -20,10 +20,9 @@ public class UserDTO {
     private LocalDate birthDate;
     private String phoneNumber;
     private String nickname;
-    private String role;
     private UserEntity.role userRole;
 
-    // DTO → Entity 변환 메서드
+    // DTO-> Entity 변환 메서드
     public UserEntity toUserEntity() {
         return UserEntity.builder()
                 .name(this.name)
@@ -34,9 +33,22 @@ public class UserDTO {
                 .birthDate(this.birthDate)
                 .phoneNumber(this.phoneNumber)
                 .nickname(this.nickname)
-                .role(this.role)
                 .userRole(this.userRole)
                 .build();
     }
 
+    // Entity -> DTO 변환 베서드
+    public UserDTO toUserDTO(UserEntity userEntity) {
+        return UserDTO.builder()
+                .name(userEntity.getName())
+                .email(userEntity.getEmail())
+                .id(userEntity.getId())
+                .pw(userEntity.getPw())
+                .gender(userEntity.getGender())
+                .birthDate(userEntity.getBirthDate())
+                .phoneNumber(userEntity.getPhoneNumber())
+                .nickname(userEntity.getNickname())
+                .userRole(userEntity.getUserRole())
+                .build();
+    }
 }

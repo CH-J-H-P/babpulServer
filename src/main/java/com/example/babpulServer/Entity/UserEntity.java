@@ -46,17 +46,16 @@ public class UserEntity {
     @Column(nullable = false, length = 8)
     private String nickname;
 
-    @Column(nullable = false, length = 5)
-    private String role;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private role userRole;
 
     public enum role {
-        owner,
-        contributor,
-        babpul
+        donor,
+        recipient,
+        store_owner
     }
+
+    
 }
 

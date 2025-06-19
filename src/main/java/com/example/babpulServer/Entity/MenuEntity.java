@@ -26,6 +26,6 @@ public class MenuEntity {
     private int menuPrice;
 
     @ManyToOne(fetch = FetchType.LAZY) // 지연로딩 옵션(필요할 때만 불러옴)
-    @JoinColumn(nullable = false) // 외래키 옵션
+    @JoinColumn(name = "restaurantKey", nullable = false) // 외래키 옵션
     private RestaurantEntity restaurant; // 시당 정보 그 자체를 가져온다
 }
