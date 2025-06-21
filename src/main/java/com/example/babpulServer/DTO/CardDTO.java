@@ -33,7 +33,7 @@ public class CardDTO {
     }
 
     // Entity -> DTO (사용자 카드 조회)
-    public CardDTO toDTOForSerch(CardEntity cardEntity) {
+    public static CardDTO toDTOForSerch(CardEntity cardEntity) {
         return CardDTO.builder()
                 .cardNumber(cardEntity.getCardNumber())
                 .cardCompany(cardEntity.getCardCompany())
