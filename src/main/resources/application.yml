@@ -1,14 +1,17 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:mysql://babpul-server.mysql.database.azure.com:3306/babpul_db?serverTimezone=UTC&characterEncoding=UTF-8
-    username: babpul
-    password: 852456dkssud@
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
       minimum-idle: 2
       connection-timeout: 30000
       idle-timeout: 600000
+
 
   jpa:
     hibernate:

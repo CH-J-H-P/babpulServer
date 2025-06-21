@@ -18,7 +18,7 @@ public class CardDTO {
 
 
     // DTO -> Entity
-    public CardEntity toCardEntity() {
+    public CardEntity toEntity() {
         UserEntity userEntity = UserEntity.builder()
                 .userKey(this.userKey)
                 .build();
@@ -29,6 +29,14 @@ public class CardDTO {
                 .user(userEntity)
                 .validThru(this.validThru)
                 .cardType(this.cardType)
+                .build();
+    }
+
+    // Entity -> DTO (사용자 카드 조회)
+    public CardDTO toDTOForSerch(CardEntity cardEntity) {
+        return CardDTO.builder()
+                .cardNumber(cardEntity.getCardNumber())
+                .cardCompany(cardEntity.getCardCompany())
                 .build();
     }
 }

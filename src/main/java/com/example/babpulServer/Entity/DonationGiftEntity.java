@@ -41,7 +41,4 @@ public class DonationGiftEntity {
         RESERVED,
         USED
     }
-
-
-
 }

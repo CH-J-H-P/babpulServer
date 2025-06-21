@@ -15,7 +15,7 @@ public class CardService {
     private final CardRepository cardRepository;
     // 카드정보 저장 메서드
     public void saveCardInfo(CardDTO cardDTO){
-        CardEntity cardEntity = cardDTO.toCardEntity();
+        CardEntity cardEntity = cardDTO.toEntity();
         cardRepository.save(cardEntity);
     }
 }

@@ -46,6 +46,10 @@ public class UserEntity {
     @Column(nullable = false, length = 8)
     private String nickname; // 닉네임
 
+    @Column(nullable = false)
+    private boolean check; // 사용자(가게주인, 아동급식카드 사용자) 인증여부
+
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private role userRole; // 유저역할
