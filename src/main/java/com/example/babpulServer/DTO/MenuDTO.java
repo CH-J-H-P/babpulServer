@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuDTO {
-    private Long menuKey; // 메뉴키
     private String menuName; //메뉴명
     private String menuDescription; // 메뉴설명
     private int menuPrice; // 메뉴 가격
@@ -24,7 +23,6 @@ public class MenuDTO {
                 .build();
 
         return MenuEntity.builder()
-                .menuKey(this.menuKey)
                 .menuName(this.menuName)
                 .menuDescription(this.menuDescription)
                 .menuPrice(this.menuPrice)

@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-    private long userKey; // 기본키
     private String name; // 이름
     private String email; // 이메일
     private String id;

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @AllArgsConstructor
 @Builder
 public class RestaurantDTO {
-    private Long restaurantKey; // 식당 기본키
     private String restaurantName; // 식당 이름
     private String restaurantAddress; // 식당 주소
     private String category; // 카테고리(분식, 중식 등)
@@ -25,7 +24,6 @@ public class RestaurantDTO {
                 .build();
 
         return RestaurantEntity.builder()
-                .restaurantKey(this.restaurantKey)
                 .restaurantName(this.restaurantName)
                 .restaurantAddress(this.restaurantAddress)
                 .category(this.category)
