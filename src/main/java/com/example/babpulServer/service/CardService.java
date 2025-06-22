@@ -23,16 +23,16 @@ public class CardService {
     final private UserSessionRepository userSessionRepository;
     final private UserRepository userRepository;
 
-//    // 카드정보 저장 메서드
-//    public void saveCardInfo(CardDTO cardDTO){
-//        CardEntity cardEntity = cardDTO.toEntity();
-//
-//        // entity 저장
-//        // 세션키로 유저 받기
-//
-//        cardEntity.setUser(userRepository.findById());
-//        cardRepository.save(cardEntity);
-//    }
+    // 카드정보 저장 메서드
+    public void saveCardInfo(CardDTO cardDTO){
+        CardEntity cardEntity = cardDTO.toEntity();
+
+        // entity 저장
+        UserEntity userEntity = userSessionRepository.findBySessionKey(cardDTO.getSessionKey()).get().getUser();
+
+        cardEntity.setUser(userEntity);
+        cardRepository.save(cardEntity);
+    }
 
     public List<CardDTO> getCardInfoBySessionKey(String sessionKey){
         // 1. 세션 정보를 활용하여 세션 Entity에 정보가 있는지 확인

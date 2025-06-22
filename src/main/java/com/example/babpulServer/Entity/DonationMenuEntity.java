@@ -25,14 +25,11 @@ public class DonationMenuEntity {
     private LocalDate dotationTime; // 기부일시
 
     @Column(nullable = false)
-    private String totalPrice; // 메뉴별 총 금액
+    private int totalPrice; // 메뉴별 총 금액
 
     @Column(nullable = false)
-    private String MenuPrice; // 메뉴 단일가격
+    private int MenuPrice; // 메뉴 단일가격
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MenuKey", nullable = false)
-    private MenuEntity menu; // 메뉴 Entity
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RestaurantKey", nullable = false)

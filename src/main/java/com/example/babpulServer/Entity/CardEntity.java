@@ -16,10 +16,10 @@ public class CardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardKey; // 카드 기본키
 
-    @Column(nullable = false, length = 20, unique = true)
+    @Column(nullable = false, unique = true)
     private String cardNumber; // 카드번호
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false)
     private String cardCompany; // 카드회사
 
     // 카드 소유 유저(외래키)
@@ -34,11 +34,11 @@ public class CardEntity {
     private String prefix; // 비밀번호 앞 2자리
 
     // 유효기간(mm/yy)
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false)
     private String validThru;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false)
     private CardType cardType; // 기부용인지 아동급식카드인지 쿠분
 
     public enum CardType {
