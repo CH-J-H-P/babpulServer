@@ -15,10 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @ResponseBody
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
     private final UserService userService;
     private final UserSessionService userSessionService;
+    private final UserSessionRepository userSessionRepository;
 
     // 회원가입 로직
     @PostMapping("/user/signup")
@@ -71,8 +71,16 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    //@PostMapping("/user/auto_login")
-    //public ResponseEntity<Void> autoLogin(@RequestBody)
+    @PostMapping("/auto/login")
+    public ResponseEntity<String> autoLogin(@RequestBody UserSessionDTO userSessionDTO){
+        Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(userSessionDTO.getSessionKey());
+        if(userSessionEntity.isEmpty()){
+            // 401 Unauthorized 반환
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        // 세션키가 유효할 때의 처리
+        return ResponseEntity.ok().build();
+    }
 
     // 로그아웃 로직
     @PostMapping("/user/logout")
