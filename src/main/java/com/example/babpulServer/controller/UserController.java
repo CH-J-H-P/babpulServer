@@ -64,6 +64,7 @@ public class UserController {
 
 
         response.addCookie(sessionCookie); // 응답에 쿠키를 추가
+        response.addCookie(userRoleCookie);
         
         // 세션정보를 DB에 저장하고 ok 코드 응답
         userSessionService.sessionSave(userSessionEntity);
