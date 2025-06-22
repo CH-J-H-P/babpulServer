@@ -22,9 +22,6 @@ public class UserEntity {
     @Column(nullable = false, length = 50)
     private String name; // 이름
 
-    // xxxxxx@emain.com 형식
-    @Column(nullable = false, length = 50)
-    private String email; // 이메일
 
     @Column(nullable = false, length = 15)
     private String id;
@@ -47,7 +44,7 @@ public class UserEntity {
     private String nickname; // 닉네임
 
     @Column(nullable = false)
-    private boolean check; // 사용자(가게주인, 아동급식카드 사용자) 인증여부
+    private boolean userCheck; // 사용자(가게주인, 아동급식카드 사용자) 인증여부
 
 
     @Enumerated(EnumType.STRING)

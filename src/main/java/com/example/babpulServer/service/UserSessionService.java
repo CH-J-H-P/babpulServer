@@ -5,6 +5,7 @@ import com.example.babpulServer.Entity.UserSessionEntity;
 import com.example.babpulServer.repository.UserRepository;
 import com.example.babpulServer.repository.UserSessionRepository;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserSessionService {
     final UserSessionRepository userSessionRepository;
 
@@ -46,6 +48,7 @@ public class UserSessionService {
     // 로그아웃 로직
     public void logout(String sessionKey) {
         Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(sessionKey);
+        System.out.println(userSessionEntity.toString());
         if(userSessionEntity.isPresent()){ // case: 해당 세션키의 정보가 있음, do: 해당 정보 삭제
             userSessionRepository.delete(userSessionEntity.get());
         }

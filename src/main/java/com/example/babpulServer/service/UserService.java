@@ -6,7 +6,6 @@ import com.example.babpulServer.Entity.UserEntity;
 import com.example.babpulServer.Entity.UserSessionEntity;
 import com.example.babpulServer.repository.UserRepository;
 import com.example.babpulServer.repository.UserSessionRepository;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +22,9 @@ public class UserService {
 
     // 회원가입 메서드
     public void signup(UserDTO userDTO){
-        UserEntity userEntity= new UserEntity();
-        userDTO.toUserEntity();
+        UserEntity userEntity= userDTO.toUserEntity();
+        userEntity.setUserCheck(false);
+        System.out.println(userEntity.toString());
         userRepository.save(userEntity);
     }
 

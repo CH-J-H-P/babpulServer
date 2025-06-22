@@ -29,7 +29,7 @@ public class UserController {
     private final UserSessionService userSessionService;
 
     // 회원가입 로직
-    @PostMapping("/user/singup")
+    @PostMapping("/user/signup")
     public ResponseEntity<Void> signup(@RequestBody UserDTO userDTO){
         if(userDTO == null){ // case: null로 요청시(변환 실패, 요청 본문 빔 등등), do: 400 Bad Request
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -41,7 +41,7 @@ public class UserController {
     }
 
     // 로그인 로직
-    @PostMapping("user/login")
+    @PostMapping("/user/login")
     public ResponseEntity<Void> login(@RequestBody UserDTO userDTO, HttpSession session,
                                       HttpServletResponse response){
         System.out.println(userDTO.toString());
@@ -52,7 +52,7 @@ public class UserController {
         // case: 올바른 요청인 경우, do: 로그인 허용과 함께 세션 반환
         UserSessionEntity userSessionEntity = userSessionService.createSession(session, userEntity);
 
-        Cookie sessionCookie = new Cookie("session_key", userSessionEntity.getSessionKey());
+        Cookie sessionCookie = new Cookie("sessionKey", userSessionEntity.getSessionKey());
         sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가하도록 설정
         sessionCookie.setPath("/"); // 사이트의 모든 경로에서 쿠키가 유효하도록 설정
         response.addCookie(sessionCookie); // 응답에 쿠키를 추가
