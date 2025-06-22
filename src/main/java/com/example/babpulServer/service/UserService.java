@@ -23,7 +23,13 @@ public class UserService {
     // 회원가입 메서드
     public void signup(UserDTO userDTO){
         UserEntity userEntity= userDTO.toUserEntity();
-        userEntity.setUserCheck(false);
+
+        // 유저 역할 따라 인증 상태 변경
+        if(userDTO.getUserRole() == UserEntity.role.recipient){
+            userEntity.setUserCheck(true);
+        }else{
+            userEntity.setUserCheck(false);
+        }
         System.out.println(userEntity.toString());
         userRepository.save(userEntity);
     }

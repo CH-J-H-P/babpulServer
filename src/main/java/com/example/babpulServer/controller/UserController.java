@@ -41,7 +41,7 @@ public class UserController {
     }
 
     // 로그인 로직
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public ResponseEntity<Void> login(@RequestBody UserDTO userDTO, HttpSession session,
                                       HttpServletResponse response){
         System.out.println(userDTO.toString());
@@ -71,7 +71,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/auto/login")
+    @PostMapping("/user/auto/login")
     public ResponseEntity<String> autoLogin(@RequestBody UserSessionDTO userSessionDTO){
         Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(userSessionDTO.getSessionKey());
         if(userSessionEntity.isEmpty()){
