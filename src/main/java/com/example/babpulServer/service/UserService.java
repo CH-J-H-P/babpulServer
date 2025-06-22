@@ -25,7 +25,7 @@ public class UserService {
         UserEntity userEntity= userDTO.toUserEntity();
 
         // 유저 역할 따라 인증 상태 변경
-        if(userDTO.getUserRole() == UserEntity.role.recipient){
+        if(userDTO.getUserRole() == UserEntity.role.DONOR){
             userEntity.setUserCheck(true);
         }else{
             userEntity.setUserCheck(false);

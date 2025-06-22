@@ -52,9 +52,9 @@ public class UserEntity {
     private role userRole; // 유저역할
 
     public enum role {
-        donor,
-        recipient,
-        store_owner
+        DONOR,
+        BABPUL,
+        BOSS
     }
 
     
