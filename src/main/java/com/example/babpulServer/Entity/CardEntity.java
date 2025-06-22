@@ -27,6 +27,12 @@ public class CardEntity {
     @JoinColumn(name = "userKey", nullable = false) // 외래키 옵션
     private UserEntity user; // 유저 정보 그 자체를 가져온다
 
+    @Column(nullable = false)
+    private String cvc; // cvc
+
+    @Column(nullable = false)
+    private String prefix; // 비밀번호 앞 2자리
+
     // 유효기간(mm/yy)
     @Column(nullable = false, length = 5)
     private String validThru;

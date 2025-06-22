@@ -6,6 +6,7 @@ import com.example.babpulServer.Entity.CardEntity;
 import com.example.babpulServer.Entity.UserEntity;
 import com.example.babpulServer.Entity.UserSessionEntity;
 import com.example.babpulServer.repository.CardRepository;
+import com.example.babpulServer.repository.UserRepository;
 import com.example.babpulServer.repository.UserSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,18 @@ import java.util.stream.Collectors;
 public class CardService {
     final private CardRepository cardRepository;
     final private UserSessionRepository userSessionRepository;
+    final private UserRepository userRepository;
 
-    // 카드정보 저장 메서드
-    public void saveCardInfo(CardDTO cardDTO){
-        CardEntity cardEntity = cardDTO.toEntity();
-        cardRepository.save(cardEntity);
-    }
+//    // 카드정보 저장 메서드
+//    public void saveCardInfo(CardDTO cardDTO){
+//        CardEntity cardEntity = cardDTO.toEntity();
+//
+//        // entity 저장
+//        // 세션키로 유저 받기
+//
+//        cardEntity.setUser(userRepository.findById());
+//        cardRepository.save(cardEntity);
+//    }
 
     public List<CardDTO> getCardInfoBySessionKey(String sessionKey){
         // 1. 세션 정보를 활용하여 세션 Entity에 정보가 있는지 확인

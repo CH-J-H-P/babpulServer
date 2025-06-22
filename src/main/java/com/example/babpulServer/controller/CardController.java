@@ -31,7 +31,7 @@ public class CardController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         // case: 올바른 요청인 경우, do: 로그인 허용과 함께 세션 반환
-        cardService.saveCardInfo(cardDTO);
+        //cardService.saveCardInfo(cardDTO);
         return ResponseEntity.ok().build();
     }
 

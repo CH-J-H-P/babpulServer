@@ -41,7 +41,7 @@ public class UserController {
     }
 
     // 로그인 로직
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody UserDTO userDTO, HttpSession session,
                                       HttpServletResponse response){
         System.out.println(userDTO.toString());
@@ -52,15 +52,26 @@ public class UserController {
         // case: 올바른 요청인 경우, do: 로그인 허용과 함께 세션 반환
         UserSessionEntity userSessionEntity = userSessionService.createSession(session, userEntity);
 
+        // 세션키
         Cookie sessionCookie = new Cookie("sessionKey", userSessionEntity.getSessionKey());
         sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가하도록 설정
         sessionCookie.setPath("/"); // 사이트의 모든 경로에서 쿠키가 유효하도록 설정
+
+        // 유저역할
+        Cookie userRoleCookie = new Cookie("userRole", userEntity.getUserRole().name());
+        userRoleCookie.setHttpOnly(true); // 필요에 따라 false로 변경 가능
+        userRoleCookie.setPath("/");
+
+
         response.addCookie(sessionCookie); // 응답에 쿠키를 추가
         
         // 세션정보를 DB에 저장하고 ok 코드 응답
         userSessionService.sessionSave(userSessionEntity);
         return ResponseEntity.ok().build();
     }
+
+    //@PostMapping("/user/auto_login")
+    //public ResponseEntity<Void> autoLogin(@RequestBody)
 
     // 로그아웃 로직
     @PostMapping("/user/logout")
