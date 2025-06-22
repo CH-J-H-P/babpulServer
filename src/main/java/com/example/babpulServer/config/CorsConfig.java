@@ -13,7 +13,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // 모든 엔드포인트에 대해 CORS 허용
-                        .allowedOrigins("http://10.96.66.64:5173") // 클라이언트 도메인 허용
+                        .allowedOrigins("https://babpul.pages.dev", "http://localhost:5173") // 클라이언트 도메인 허용
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 허용할 HTTP 메서드
                         .allowCredentials(true); // 쿠키 및 인증 정보를 포함한 요청 허용
             }
