@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @AllArgsConstructor
 @Builder
 public class RestaurantDTO {
+    private Long restaurantKey;// 기본키
     private String restaurantName; // 식당 이름
     private String restaurantAddress; // 식당 주소
     private String category; // 카테고리(분식, 중식 등)
@@ -28,6 +29,17 @@ public class RestaurantDTO {
                 .restaurantAddress(this.restaurantAddress)
                 .category(this.category)
                 .user(user)
+                .build();
+    }
+
+    // Entity -> DTO 변환 메서드
+    public static RestaurantDTO fromEntity(RestaurantEntity restaurantEntity) {
+        return RestaurantDTO.builder()
+                .restaurantKey(restaurantEntity.getRestaurantKey())
+                .restaurantName(restaurantEntity.getRestaurantName())
+                .restaurantAddress(restaurantEntity.getRestaurantAddress())
+                .category(restaurantEntity.getCategory())
+                .userKey(restaurantEntity.getUser().getUserKey())
                 .build();
     }
 }

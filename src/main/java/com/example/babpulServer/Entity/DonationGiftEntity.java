@@ -18,11 +18,14 @@ public class DonationGiftEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long donationGiftKey;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate reservationAt;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate expirationAt;
+
+    @Column(nullable = false)
+    private String menuName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donationMenuKey", nullable = false)
@@ -30,11 +33,11 @@ public class DonationGiftEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserKey")
-    private UserEntity user; // 유저(수혜자) 엔티티 연결, null 허용
+    private UserEntity donor; // 유저(수혜자) 엔티티 연결, null 허용
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private DonationState donationState; // 상태(사용전, 예약, 사용완료)
+    private DonationState donationState = DonationState.UNUSED; // 상태(사용전, 예약, 사용완료), 기본으로 사용전 설정
 
     public enum DonationState {
         UNUSED,

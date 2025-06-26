@@ -29,4 +29,14 @@ public class MenuDTO {
                 .restaurant(restaurant)
                 .build();
     }
+
+    // Entity-> DTO 변환 메서드
+    public static MenuDTO toDTO(MenuEntity menuEntity) {
+        return MenuDTO.builder()
+                .menuName(menuEntity.getMenuName())
+                .menuDescription(menuEntity.getMenuDescription())
+                .menuPrice(menuEntity.getMenuPrice())
+                .restaurant(menuEntity.getRestaurant().getRestaurantKey())
+                .build();
+    }
 }
