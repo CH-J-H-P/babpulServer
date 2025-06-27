@@ -1,11 +1,10 @@
 package com.example.babpulServer.service;
 
-import com.example.babpulServer.DTO.DonationGiftDTO;
 import com.example.babpulServer.DTO.DonationMenuDTO;
 import com.example.babpulServer.DTO.DonationReceiptDTO;
-import com.example.babpulServer.Entity.DonationGiftEntity;
-import com.example.babpulServer.Entity.DonationMenuEntity;
-import com.example.babpulServer.Entity.MenuEntity;
+import com.example.babpulServer.Entity.CardEntity;
+import com.example.babpulServer.Entity.CompanyMoneyEntity;
+import com.example.babpulServer.Entity.DonationPaymentEntity;
 import com.example.babpulServer.Entity.UserEntity;
 import com.example.babpulServer.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +21,9 @@ public class DonationService {
     private final UserSessionRepository userSessionRepository;
     private final RestaurantReository restaurantReository;
     private final DonationMenuRepository donationMenuRepository;
-    private final DonationGiftRepository donationGiftRepository;
     private final MenuRepository menuRepository;
+    private final CardRepository cardRepository;
+    private final CompanyMoneyRepository companyMoneyRepository;
 
     // 기부내역 남기기 + 기프티콘 생성
     public void saveDonationMenu(DonationMenuDTO donaDTO, String orderNumber, LocalDate orderDate) {
@@ -31,26 +32,29 @@ public class DonationService {
 
         for (DonationMenuDTO.MenuDTO menuDTO : menuDTOList) {
             // 1. 메뉴별 기부내역 엔티티 생성 및 값 세팅
-            DonationMenuEntity donationMenuEntity = new DonationMenuEntity();
-            donationMenuEntity.setOrderNumber(orderNumber);
-            donationMenuEntity.setOrderDate(orderDate);
-            donationMenuEntity.setRestaurant(restaurantReository.findByRestaurantAddress(donaDTO.getAddress()).get());
-            donationMenuEntity.setDonor(donor);
-            donationMenuEntity.setTotalPrice(menuDTO.getDonationAmount());
-            donationMenuEntity.setMenuPrice(menuDTO.getDonationAmount() / menuDTO.getQuantity());
+            DonationPaymentEntity donationPaymentEntity = new DonationPaymentEntity();
+            donationPaymentEntity.setOrderNumber(orderNumber);
+            donationPaymentEntity.setOrderDate(orderDate);
+            donationPaymentEntity.setRestaurant(restaurantReository.findByRestaurantAddress(donaDTO.getAddress()).get());
+            donationPaymentEntity.setMenu(menuRepository.findByMenuKey(menuDTO.getMenuKey()).get());
+            donationPaymentEntity.setMenuName(menuDTO.getMenuName());
+            donationPaymentEntity.setDonor(donor);
+            donationPaymentEntity.setTotalPrice(menuDTO.getDonationAmount());
+            donationPaymentEntity.setMenuPrice(menuDTO.getDonationAmount() / menuDTO.getQuantity());
+
+            // 아이들 카드 털기
+            UserEntity userEntity = userSessionRepository.findBySessionKey(donaDTO.getSessionKey()).get().getUser();
+            Optional<CardEntity> cardEntity = cardRepository.findByUser(userEntity);
+            Optional<CompanyMoneyEntity> companyMoneyEntity = companyMoneyRepository.findByUser(userEntity);
+            if(menuDTO.getDonationAmount() >= cardEntity.get().getMoney()) {
+                companyMoneyEntity.get().setTotalMoney(companyMoneyEntity.get().getTotalMoney() - (menuDTO.getDonationAmount() - cardEntity.get().getMoney()));
+                cardEntity.get().setMoney(0);
+            }else{
+                cardEntity.get().setMoney(cardEntity.get().getMoney()- menuDTO.getDonationAmount());
+            }
 
             // 2. 메뉴 엔티티 저장
-            donationMenuRepository.save(donationMenuEntity);
-
-            // 3. 기프티콘 엔티티를 메뉴 수량만큼 생성
-            for (int i = 0; i < menuDTO.getQuantity(); i++) {
-                DonationGiftEntity donationGiftEntity = new DonationGiftEntity();
-                donationGiftEntity.setDonor(donor);
-                donationGiftEntity.setMenuName(menuDTO.getMenuName());
-                donationGiftEntity.setMenu(menuRepository.findByMenuKey(menuDTO.getMenuKey()).get());
-                donationGiftEntity.setDonationMenu(donationMenuEntity); // 기부내역 외래키
-                donationGiftRepository.save(donationGiftEntity);
-            }
+            donationMenuRepository.save(donationPaymentEntity);
         }
     }
 
@@ -60,7 +64,7 @@ public class DonationService {
     // 기부내역 상세 보여주기
     public DonationReceiptDTO getDonationReceipt(String orderNumber) {
         // 1. 데이터 조회
-        List<DonationMenuEntity> dmList = donationMenuRepository.findByOrderNumber(orderNumber);
+        List<DonationPaymentEntity> dmList = donationMenuRepository.findByOrderNumber(orderNumber);
 
         // 반환할 데이터 불러오기
         DonationReceiptDTO donationReceipt = new DonationReceiptDTO();
@@ -71,9 +75,9 @@ public class DonationService {
 
         // 총기부금액, 기부 리스트 가져오기
         int totalAmount = 0;
-        for (DonationMenuEntity dmEntity : dmList) {
+        for (DonationPaymentEntity dmEntity : dmList) {
             DonationReceiptDTO.MenuDTO menuDTO = DonationReceiptDTO.MenuDTO.builder()
-                    .menuName(dmEntity.getMenuName())
+                    .menuName(dmEntity.getMenu().getMenuName())
                     .quantity(dmEntity.getTotalPrice() / dmEntity.getMenuPrice())
                     .donationAmount(dmEntity.getTotalPrice())
                     .build();
@@ -91,5 +95,4 @@ public class DonationService {
 
     // 기프티콘 사용내역 보여주기
 
-    // 기프티콘을 사용한 경우
 }

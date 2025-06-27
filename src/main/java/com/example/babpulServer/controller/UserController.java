@@ -1,5 +1,6 @@
 package com.example.babpulServer.controller;
 
+import com.example.babpulServer.DTO.MyPageDTO;
 import com.example.babpulServer.DTO.UserDTO;
 import com.example.babpulServer.DTO.UserSessionDTO;
 import com.example.babpulServer.Entity.UserEntity;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -54,12 +56,10 @@ public class UserController {
 
         // 세션키
         Cookie sessionCookie = new Cookie("sessionKey", userSessionEntity.getSessionKey());
-        sessionCookie.setHttpOnly(true); // 자바스크립트에서 접근 불가하도록 설정
         sessionCookie.setPath("/"); // 사이트의 모든 경로에서 쿠키가 유효하도록 설정
 
         // 유저역할
         Cookie userRoleCookie = new Cookie("userRole", userEntity.getUserRole().name());
-        userRoleCookie.setHttpOnly(true); // 필요에 따라 false로 변경 가능
         userRoleCookie.setPath("/");
 
 
@@ -87,5 +87,11 @@ public class UserController {
     public ResponseEntity<Void> logout(@RequestBody UserSessionDTO userSessionDTO){
         userService.logout(userSessionDTO.getSessionKey());
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/user/mypage")
+    public ResponseEntity<MyPageDTO> myPage(@RequestBody String sessionKey){
+        MyPageDTO myPageDTO = userService.myPage(sessionKey);
+        return ResponseEntity.ok(myPageDTO);
     }
 }

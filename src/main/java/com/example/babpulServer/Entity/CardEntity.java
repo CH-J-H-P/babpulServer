@@ -37,6 +37,10 @@ public class CardEntity {
     @Column(nullable = false)
     private String validThru;
 
+    // 금액
+    @Column(nullable = true)
+    private int money;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CardType cardType; // 기부용인지 아동급식카드인지 쿠분

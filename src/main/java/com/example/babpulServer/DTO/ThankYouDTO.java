@@ -25,8 +25,7 @@ public class ThankYouDTO {
         return ThankYouEntity.builder()
                 .subTitle(this.subTitle)
                 .text(this.text)
-                .userDonor(this.userDonor)
-                .userRecipient(this.userRecipient)
+                .user(this.userDonor)
                 .build();
     }
 }

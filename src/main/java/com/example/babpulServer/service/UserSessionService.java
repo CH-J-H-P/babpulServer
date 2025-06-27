@@ -36,12 +36,6 @@ public class UserSessionService {
 
     // 테이블에 세션 저장하는 로직, 디바이스 정보가 없는 관계로 임시적으로 단일세션 기준으로 구현
     public void sessionSave(UserSessionEntity userSessionEntity){
-        // 삭제 필요시 사용, 지금은 단순 저장
-//        Optional<UserSessionEntity> checkSessionEntity = userSessionRepository.findByUser(userSessionEntity.getUser());
-//
-//        if(checkSessionEntity.isPresent()){ // case: 기존에 이미 만든 세션이 있는 경우, do: 삭제 후 저장
-//            userSessionRepository.delete(checkSessionEntity.get());
-//        }
         userSessionRepository.save(userSessionEntity);
     }
 

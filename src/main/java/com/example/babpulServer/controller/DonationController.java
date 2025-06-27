@@ -3,7 +3,7 @@ package com.example.babpulServer.controller;
 
 import com.example.babpulServer.DTO.DonationMenuDTO;
 import com.example.babpulServer.DTO.DonationReceiptDTO;
-import com.example.babpulServer.Entity.DonationMenuEntity;
+import com.example.babpulServer.Entity.DonationPaymentEntity;
 import com.example.babpulServer.service.DonationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,10 @@ import java.util.UUID;
 public class DonationController {
     final private DonationService donationService;
 
-    @PostMapping("/donation/save")
+    @PostMapping("/donation/payment")
     public ResponseEntity<Void> donationOrder(@RequestBody DonationMenuDTO donationMenuDTO){
 
-        DonationMenuEntity donationMenuEntity = new DonationMenuEntity();
+        DonationPaymentEntity donationPaymentEntity = new DonationPaymentEntity();
         String orderNumber = UUID.randomUUID().toString();
         LocalDate orderDate = LocalDate.now();
 
@@ -41,4 +41,3 @@ public class DonationController {
         return ResponseEntity.ok().body(receipt);
     }
 }
-    

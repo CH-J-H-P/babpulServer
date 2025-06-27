@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "donation_menu_table")
-public class DonationMenuEntity {
+@Table(name = "donation_payment_table")
+public class DonationPaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long donationMenuKey; // 기본키
@@ -32,6 +32,10 @@ public class DonationMenuEntity {
 
     @Column(nullable = false)
     private String menuName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "menuKey", nullable = false)
+    private MenuEntity menu;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

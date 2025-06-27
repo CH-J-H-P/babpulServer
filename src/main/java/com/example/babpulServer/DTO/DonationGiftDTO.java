@@ -1,6 +1,5 @@
 package com.example.babpulServer.DTO;
 
-import com.example.babpulServer.Entity.DonationGiftEntity;
 import lombok.*;
 
 import java.time.LocalDate;

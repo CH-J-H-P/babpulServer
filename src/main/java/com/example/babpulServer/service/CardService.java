@@ -3,11 +3,10 @@ package com.example.babpulServer.service;
 
 import com.example.babpulServer.DTO.CardDTO;
 import com.example.babpulServer.Entity.CardEntity;
+import com.example.babpulServer.Entity.CompanyMoneyEntity;
 import com.example.babpulServer.Entity.UserEntity;
 import com.example.babpulServer.Entity.UserSessionEntity;
-import com.example.babpulServer.repository.CardRepository;
-import com.example.babpulServer.repository.UserRepository;
-import com.example.babpulServer.repository.UserSessionRepository;
+import com.example.babpulServer.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 public class CardService {
     final private CardRepository cardRepository;
     final private UserSessionRepository userSessionRepository;
-    final private UserRepository userRepository;
+    private final CompanyMoneyRepository companyMoneyRepository;
 
     // 카드정보 저장 메서드
     public void saveCardInfo(CardDTO cardDTO){
@@ -29,7 +28,13 @@ public class CardService {
 
         // entity 저장
         UserEntity userEntity = userSessionRepository.findBySessionKey(cardDTO.getSessionKey()).get().getUser();
-
+        if(cardEntity.getCardType().equals(CardEntity.CardType.CHILD_MEAL_CARD)){
+            cardEntity.setMoney(9500);
+            CompanyMoneyEntity companyMoneyEntity = new CompanyMoneyEntity();
+            companyMoneyEntity.setTotalMoney(30000);
+            companyMoneyEntity.setUser(userEntity);
+            companyMoneyRepository.save(companyMoneyEntity);
+        }
         cardEntity.setUser(userEntity);
         cardRepository.save(cardEntity);
     }

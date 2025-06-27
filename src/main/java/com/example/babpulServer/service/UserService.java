@@ -1,6 +1,7 @@
 package com.example.babpulServer.service;
 
 
+import com.example.babpulServer.DTO.MyPageDTO;
 import com.example.babpulServer.DTO.UserDTO;
 import com.example.babpulServer.Entity.UserEntity;
 import com.example.babpulServer.Entity.UserSessionEntity;
@@ -9,9 +10,7 @@ import com.example.babpulServer.repository.UserSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -54,4 +53,15 @@ public class UserService {
     public void logout(String sessionKey){
         userSessionService.logout(sessionKey);
     }
+
+    public MyPageDTO myPage(String sessionKey){
+        Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(sessionKey);
+        UserEntity userEntity = userSessionEntity.get().getUser();
+        MyPageDTO myPageDTO = new MyPageDTO();
+        myPageDTO.setUsername(userEntity.getName());
+        myPageDTO.setNickname(userEntity.getNickname());
+        return myPageDTO;
+    }
+
+
 }

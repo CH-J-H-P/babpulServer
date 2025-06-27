@@ -25,6 +25,12 @@ public class RestaurantEntity {
     @Column(nullable = false, length = 20)
     private String category; // 카테고리(분식, 중식 등등)
 
+    @Column(nullable = false)
+    private String restaurantExplain; // 식당 설명
+
+    @Column(nullable = false)
+    private String operatingHours; // 운영시간
+
     @ManyToOne(fetch = FetchType.LAZY) // 지연로딩 옵션(필요할 때만 불러옴)
     @JoinColumn(name = "userKey", nullable = false) // 외래키 옵션
     private UserEntity user; // 유저 정보 그 자체를 가져온다
