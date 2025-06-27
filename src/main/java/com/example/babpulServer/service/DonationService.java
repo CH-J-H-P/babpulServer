@@ -7,10 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -102,7 +100,52 @@ public class DonationService {
         return donationReceipt;
     }
 
-    
 
+    public List<DonationReceiptDTO> allDonation(String sessionKey) {
+        // 1. 세션키로 유저 조회
+        UserEntity userEntity = userSessionRepository.findBySessionKey(sessionKey)
+                .orElseThrow(() -> new RuntimeException("유효하지 않은 세션입니다."))
+                .getUser();
 
+        // 2. 해당 유저의 모든 결제 내역 조회
+        List<DonationPaymentEntity> paymentEntities = donationPaymentRepository.findByUser(userEntity);
+
+        // 3. 주문번호별로 그룹핑
+        Map<String, List<DonationPaymentEntity>> groupedByOrderNumber = paymentEntities.stream()
+                .collect(Collectors.groupingBy(DonationPaymentEntity::getOrderNumber));
+
+        List<DonationReceiptDTO> result = new ArrayList<>();
+
+        // 4. 주문번호별로 영수증 생성
+        for (List<DonationPaymentEntity> orderPayments : groupedByOrderNumber.values()) {
+            DonationReceiptDTO receipt = buildReceiptFromPaymentEntities(orderPayments);
+            result.add(receipt);
+        }
+
+        // (선택) 주문일자 내림차순 정렬
+        result.sort(Comparator.comparing(DonationReceiptDTO::getOrderDate).reversed());
+
+        return result;
+    }
+
+    // 기존 donationReceipt 로직을 재사용할 수 있게 분리
+    private DonationReceiptDTO buildReceiptFromPaymentEntities(List<DonationPaymentEntity> donationPaymentEntities) {
+        DonationReceiptDTO donationReceipt = new DonationReceiptDTO();
+        donationReceipt.setOrderDate(donationPaymentEntities.get(0).getOrderDate());
+        List<DonationReceiptDTO.MenuDTO> menuDTOS = new ArrayList<>();
+        int totalAmount = 0;
+        for (DonationPaymentEntity donationPaymentEntity : donationPaymentEntities) {
+            DonationReceiptDTO.MenuDTO menuDTO = new DonationReceiptDTO.MenuDTO();
+            menuDTO.setMenuName(donationPaymentEntity.getMenu().getMenuName());
+            menuDTO.setQuantity(donationPaymentEntity.getMenuPrice() / donationPaymentEntity.getMenu().getMenuPrice());
+            menuDTO.setDonationAmount(donationPaymentEntity.getMenuPrice());
+            menuDTOS.add(menuDTO);
+            totalAmount += donationPaymentEntity.getMenuPrice(); // 실제 결제 금액 합산
+        }
+        donationReceipt.setMenuList(menuDTOS);
+        donationReceipt.setTotalAmount(totalAmount);
+
+        return donationReceipt;
+    }
 }
+

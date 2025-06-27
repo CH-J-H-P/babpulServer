@@ -48,4 +48,10 @@ public class DonationController {
         return ResponseEntity.ok().body(donationReceiptDTO);
     }
 
+    @GetMapping("/donation/all/receipts")
+    public ResponseEntity<List<DonationReceiptDTO>> getAllReceipts(@RequestParam String sessionKey) {
+        List<DonationReceiptDTO> receipts = donationService.allDonation(sessionKey);
+        return ResponseEntity.ok(receipts);
+    }
+
 }
