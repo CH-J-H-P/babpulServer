@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -33,6 +34,18 @@ public class DonationController {
         donationService.donation( donationDTO);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/donation/my")
+    public ResponseEntity<List<DonationDTO>> myDonation(@RequestBody String sessionKey){
+        List<DonationDTO> donationDTOS= donationService.myDonation(sessionKey);
+        return ResponseEntity.ok().body(donationDTOS);
+    }
+
     // 기부내역 상세 확인
+    @GetMapping("/donation/receipt/{orderNumber}")
+    public ResponseEntity<DonationReceiptDTO> donationReceipt(@PathVariable  String orderNumber){
+        DonationReceiptDTO donationReceiptDTO = donationService.donationReceipt(orderNumber);
+        return ResponseEntity.ok().body(donationReceiptDTO);
+    }
 
 }

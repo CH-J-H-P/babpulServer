@@ -6,10 +6,10 @@ import com.example.babpulServer.service.ThankYouService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @ResponseBody
@@ -23,5 +23,11 @@ public class ThankyouController {
     public ResponseEntity<Void> thankYou(@RequestBody ThankYouDTO thankYouDTO){
         thankYouService.thankYou(thankYouDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/thank/all")
+    public ResponseEntity<List<ThankYouDTO>> thankYou(@RequestBody String sessionKey){
+        List<ThankYouDTO> thankYouDTOList = thankYouService.allThankYou();
+        return ResponseEntity.ok().body(thankYouDTOList);
     }
 }

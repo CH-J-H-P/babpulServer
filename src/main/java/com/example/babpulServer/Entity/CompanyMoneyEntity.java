@@ -21,6 +21,6 @@ public class CompanyMoneyEntity {
     private int totalMoney;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userKey", nullable = false)
+    @JoinColumn(name = "userKey", nullable = false, unique = true)
     private UserEntity user;
 }

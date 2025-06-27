@@ -9,6 +9,8 @@ import com.example.babpulServer.repository.UserSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +31,17 @@ public class ThankYouService {
         thankYouRepository.save(thankYouEntity);
     }
 
-
+    public List<ThankYouDTO> allThankYou() {
+        List<ThankYouEntity> thankYouEntityList = thankYouRepository.findAll();
+        List<ThankYouDTO> thankYouDTOList = new ArrayList<>();
+        for (ThankYouEntity thankYouEntity : thankYouEntityList) {
+            ThankYouDTO thankYouDTO = new ThankYouDTO();
+            thankYouDTO.setSubTitle(thankYouEntity.getSubTitle());
+            thankYouDTO.setText(thankYouEntity.getText());
+            thankYouDTOList.add(thankYouDTO);
+        }
+        return thankYouDTOList;
+    }
 }
 
 

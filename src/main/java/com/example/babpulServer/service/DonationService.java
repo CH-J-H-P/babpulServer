@@ -1,8 +1,6 @@
 package com.example.babpulServer.service;
 
-import com.example.babpulServer.DTO.DonationDTO;
-import com.example.babpulServer.DTO.DonationMenuDTO;
-import com.example.babpulServer.DTO.DonationReceiptDTO;
+import com.example.babpulServer.DTO.*;
 import com.example.babpulServer.Entity.*;
 import com.example.babpulServer.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +65,44 @@ public class DonationService {
     }
 
 
-    // 기프티콘 사용내역 보여주기
+    public List<DonationDTO> myDonation(String sessionKey){
+        Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(sessionKey);
+        UserEntity userEntity = userSessionEntity.get().getUser();
+        List<DonationEntity> donationEntity = donationRepository.findByUser(userEntity);
+
+        List<DonationDTO> donationDTOs = new ArrayList<>();
+        for(DonationEntity donationEntity1 : donationEntity){
+            DonationDTO donationDTO = new DonationDTO();
+            donationDTO.setMoney(donationEntity1.getMoney());
+            donationDTO.setDonationDate(donationEntity1.getDonationDate());
+
+            donationDTOs.add(donationDTO);
+        }
+
+        return donationDTOs;
+    }
+
+    public DonationReceiptDTO donationReceipt(String orderNumber){
+        List<DonationPaymentEntity> donationPaymentEntities = donationPaymentRepository.findByOrderNumber(orderNumber);
+        DonationReceiptDTO donationReceipt = new DonationReceiptDTO();
+        donationReceipt.setOrderDate(donationPaymentEntities.get(0).getOrderDate());
+        List<DonationReceiptDTO.MenuDTO> menuDTOS = new ArrayList<>();
+        int totalAmount = 0;
+        for(DonationPaymentEntity donationPaymentEntity : donationPaymentEntities){
+            DonationReceiptDTO.MenuDTO menuDTO = new DonationReceiptDTO.MenuDTO();
+            menuDTO.setMenuName(donationPaymentEntity.getMenu().getMenuName());
+            menuDTO.setQuantity(donationPaymentEntity.getMenuPrice() / donationPaymentEntity.getMenu().getMenuPrice());
+            menuDTO.setDonationAmount(donationPaymentEntity.getMenuPrice());
+            menuDTOS.add(menuDTO);
+            totalAmount += donationPaymentEntity.getMenu().getMenuPrice();
+        }
+        donationReceipt.setMenuList(menuDTOS);
+        donationReceipt.setTotalAmount(totalAmount);
+
+        return donationReceipt;
+    }
+
+    
 
 
 }

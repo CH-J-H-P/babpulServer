@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Setter
 @Getter
@@ -22,6 +24,7 @@ public class ThankYouEntity {
 
     @Column(nullable = false)
     private String text; // 본문
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)

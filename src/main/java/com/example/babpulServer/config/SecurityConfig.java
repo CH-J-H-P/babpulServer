@@ -19,7 +19,7 @@ public class SecurityConfig {
                         authorize -> authorize
                                 .requestMatchers("/user/signup", "/user/login", "/user/auto/login"
                                         , "/card/save", "/restaurant/list", "/donation/payment"
-                                , "/user/mypage").permitAll()
+                                , "/user/mypage", "/thank/all", "/donation/receipt/{orderNumber}").permitAll()
                                 .anyRequest().permitAll()
                         //authenticated()로 하면 설정한 것 이외의 요청은 인증 필요
                 );
