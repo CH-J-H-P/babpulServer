@@ -22,6 +22,8 @@ public class DonationEntity {
     @Column(nullable = false)
     private int money;
 
+    @Column(nullable = false)
+    private LocalDateTime donationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userKey", nullable = false)

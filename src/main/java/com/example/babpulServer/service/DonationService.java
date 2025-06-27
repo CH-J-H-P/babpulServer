@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,7 @@ public class DonationService {
         DonationEntity donationEntity = new DonationEntity();
         donationEntity.setMoney(donationDTO.getMoney());
         donationEntity.setUser(userEntity);
+        donationEntity.setDonationDate(LocalDateTime.now());
 
         donationRepository.save(donationEntity);
     }
@@ -73,6 +75,7 @@ public class DonationService {
         for(DonationEntity donationEntity1 : donationEntity){
             DonationDTO donationDTO = new DonationDTO();
             donationDTO.setMoney(donationEntity1.getMoney());
+            donationDTO.setDonationDate(donationEntity1.getDonationDate());
 
             donationDTOs.add(donationDTO);
         }
@@ -147,5 +150,7 @@ public class DonationService {
 
         return donationReceipt;
     }
+
+
 }
 
