@@ -3,10 +3,8 @@ package com.example.babpulServer.service;
 
 import com.example.babpulServer.DTO.MyPageDTO;
 import com.example.babpulServer.DTO.UserDTO;
-import com.example.babpulServer.Entity.UserEntity;
-import com.example.babpulServer.Entity.UserSessionEntity;
-import com.example.babpulServer.repository.UserRepository;
-import com.example.babpulServer.repository.UserSessionRepository;
+import com.example.babpulServer.Entity.*;
+import com.example.babpulServer.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +16,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserSessionRepository userSessionRepository;
     private final UserSessionService userSessionService;
+    private final RestaurantReository restaurantReository;
+    private final CardRepository cardRepository;
+    private final CompanyMoneyRepository companyMoneyRepository;
 
     // 회원가입 메서드
     public void signup(UserDTO userDTO){
@@ -60,6 +61,19 @@ public class UserService {
         MyPageDTO myPageDTO = new MyPageDTO();
         myPageDTO.setUsername(userEntity.getName());
         myPageDTO.setNickname(userEntity.getNickname());
+
+        // 사장일 경우
+        if(userEntity.getUserRole() == UserEntity.role.BOSS){
+            Optional<RestaurantEntity> restaurantEntity = restaurantReository.findByUser(userEntity);
+            myPageDTO.setRestaurantKey(restaurantEntity.get().getRestaurantKey());
+            myPageDTO.setRestaurantName(restaurantEntity.get().getRestaurantName());
+            myPageDTO.setRestaurantAddress(restaurantEntity.get().getRestaurantAddress());
+        }else if(userEntity.getUserRole() == UserEntity.role.BABPUL){
+            Optional<CardEntity> cardEntity = cardRepository.findByUser(userEntity);
+            Optional<CompanyMoneyEntity> companyMoneyEntity = companyMoneyRepository.findByUser(userEntity);
+            myPageDTO.setKidMoney(cardEntity.get().getMoney());
+            myPageDTO.setCompanyMoney(companyMoneyEntity.get().getTotalMoney());
+        }
         return myPageDTO;
     }
 
