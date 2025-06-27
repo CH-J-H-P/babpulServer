@@ -2,6 +2,7 @@ package com.example.babpulServer.controller;
 
 
 import com.example.babpulServer.DTO.DonationMenuDTO;
+import com.example.babpulServer.DTO.DonationReceiptDTO;
 import com.example.babpulServer.Entity.DonationMenuEntity;
 import com.example.babpulServer.service.DonationService;
 import lombok.RequiredArgsConstructor;
@@ -32,4 +33,12 @@ public class DonationController {
         donationService.saveDonationMenu(donationMenuDTO, orderNumber,orderDate);
         return ResponseEntity.ok().build();
     }
+
+    // 기부내역 상세 확인
+    @GetMapping("/donation/receipt/{orderNumber}")
+    public ResponseEntity<DonationReceiptDTO> getDonationReceipt(@PathVariable String orderNumber){
+        DonationReceiptDTO receipt = donationService.getDonationReceipt(orderNumber);
+        return ResponseEntity.ok().body(receipt);
+    }
 }
+    

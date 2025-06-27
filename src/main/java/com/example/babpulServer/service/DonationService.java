@@ -57,28 +57,36 @@ public class DonationService {
     // 전체 기부내역 보여주기
 
 
-//    // 기부내역 상세 보여주기
-//    public DonationReceiptDTO getDonationReceipt(String orderNumber) {
-//        // 1. 데이터 조회
-//        List<DonationMenuEntity> dmList = donationMenuRepository.findByOrderNumber(orderNumber);
-//
-//        // 반환할 데이터 불러오기
-//        DonationReceiptDTO donationReceipt = new DonationReceiptDTO();
-//        List<DonationReceiptDTO.MenuDTO> menuDTOList = new ArrayList<>();
-//
-//        // 공통 데이터 뽑기(주문일자)
-//        donationReceipt.setOrderDate(dmList.get(0).getOrderDate());
-//
-//        // 총기부금액, 기부 리스트 가져오기
-//        int totalAmount = 0;
-//        for (DonationMenuEntity dmEntity : dmList) {
-//            DonationReceiptDTO.MenuDTO menuDTO = DonationReceiptDTO.MenuDTO.builder()
-//                    .menuName(dmEntity.)
-//                    .quantity(dmEntity.getTotalPrice() / dmEntity.getMenuPrice())
-//                    .donationAmount(dmEntity.getTotalPrice())
-//                    .build();
-//        }
-//    }
+    // 기부내역 상세 보여주기
+    public DonationReceiptDTO getDonationReceipt(String orderNumber) {
+        // 1. 데이터 조회
+        List<DonationMenuEntity> dmList = donationMenuRepository.findByOrderNumber(orderNumber);
+
+        // 반환할 데이터 불러오기
+        DonationReceiptDTO donationReceipt = new DonationReceiptDTO();
+        List<DonationReceiptDTO.MenuDTO> menuDTOList = new ArrayList<>();
+
+        // 공통 데이터 뽑기(주문일자)
+        donationReceipt.setOrderDate(dmList.get(0).getOrderDate());
+
+        // 총기부금액, 기부 리스트 가져오기
+        int totalAmount = 0;
+        for (DonationMenuEntity dmEntity : dmList) {
+            DonationReceiptDTO.MenuDTO menuDTO = DonationReceiptDTO.MenuDTO.builder()
+                    .menuName(dmEntity.getMenuName())
+                    .quantity(dmEntity.getTotalPrice() / dmEntity.getMenuPrice())
+                    .donationAmount(dmEntity.getTotalPrice())
+                    .build();
+
+            menuDTOList.add(menuDTO);
+            totalAmount += dmEntity.getTotalPrice();
+        }
+
+        donationReceipt.setMenuList(menuDTOList);
+        donationReceipt.setTotalAmount(totalAmount);
+
+        return donationReceipt;
+    }
 
 
     // 기프티콘 사용내역 보여주기

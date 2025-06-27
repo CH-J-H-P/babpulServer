@@ -30,6 +30,9 @@ public class DonationMenuEntity {
     @Column(nullable = false)
     private int menuPrice; // 메뉴 단일가격(기부 금액 기준)
 
+    @Column(nullable = false)
+    private String menuName;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RestaurantKey", nullable = false)
