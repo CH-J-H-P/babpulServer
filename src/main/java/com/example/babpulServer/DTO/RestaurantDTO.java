@@ -17,6 +17,8 @@ public class RestaurantDTO {
     private String category; // 카테고리(분식, 중식 등)
     private Long userKey; // 유저 PK만 포함
 
+
+
     // DTO → Entity 변환 메서드
     public RestaurantEntity toEntity() {
         // userKey만 있을 경우, PK만 세팅된 UserEntity 객체를 생성

@@ -69,4 +69,5 @@ public class DonationService {
 
     // 기프티콘 사용내역 보여주기
 
+
 }
