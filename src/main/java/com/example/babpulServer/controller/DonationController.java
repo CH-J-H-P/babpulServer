@@ -1,6 +1,7 @@
 package com.example.babpulServer.controller;
 
 
+import com.example.babpulServer.DTO.DonationDTO;
 import com.example.babpulServer.DTO.DonationMenuDTO;
 import com.example.babpulServer.DTO.DonationReceiptDTO;
 import com.example.babpulServer.Entity.DonationPaymentEntity;
@@ -27,6 +28,11 @@ public class DonationController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/donation/save")
+    public ResponseEntity<Void> saveDonation(@RequestBody DonationDTO donationDTO){
+        donationService.donation( donationDTO);
+        return ResponseEntity.ok().build();
+    }
     // 기부내역 상세 확인
 
 }

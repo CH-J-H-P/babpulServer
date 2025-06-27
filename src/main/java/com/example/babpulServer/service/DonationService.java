@@ -1,5 +1,6 @@
 package com.example.babpulServer.service;
 
+import com.example.babpulServer.DTO.DonationDTO;
 import com.example.babpulServer.DTO.DonationMenuDTO;
 import com.example.babpulServer.DTO.DonationReceiptDTO;
 import com.example.babpulServer.Entity.*;
@@ -23,6 +24,7 @@ public class DonationService {
     private final CardRepository cardRepository;
     private final CompanyMoneyRepository companyMoneyRepository;
     private final DonationPaymentRepository donationPaymentRepository;
+    private final DonationRepository donationRepository;
 
     // 기부결제
     public void donationPay(DonationMenuDTO donationMenuDTO){
@@ -51,6 +53,17 @@ public class DonationService {
 
             donationPaymentRepository.save(donationPaymentEntity);
         }
+    }
+
+    public void donation(DonationDTO donationDTO){
+        Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(donationDTO.getSessionKey());
+        UserEntity userEntity = userSessionEntity.get().getUser();
+
+        DonationEntity donationEntity = new DonationEntity();
+        donationEntity.setMoney(donationDTO.getMoney());
+        donationEntity.setUser(userEntity);
+
+        donationRepository.save(donationEntity);
     }
 
 
