@@ -16,16 +16,14 @@ public class ThankYouDTO {
 
     private String text; // 본문
 
-    private UserEntity userDonor; // 수혜자 정보
+    private String sessionKey; // 수혜자 정보
 
-    private UserEntity userRecipient; // 기부자 정보
 
     // DTO -> Entity
     public ThankYouEntity youEntity(){
         return ThankYouEntity.builder()
                 .subTitle(this.subTitle)
                 .text(this.text)
-                .user(this.userDonor)
                 .build();
     }
 }
