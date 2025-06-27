@@ -26,12 +26,18 @@ public class DonationPaymentEntity {
 
 
     @Column(nullable = false)
-    private int menuPrice; // 메뉴 단일가격
+    private int menuPrice;
+
+    @Column(nullable = false)
+    private boolean use;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menuKey", nullable = false)
     private MenuEntity menu;
+
+    @Column(nullable = false)
+    private String state;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

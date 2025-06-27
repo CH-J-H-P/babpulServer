@@ -39,6 +39,7 @@ public class DonationService {
             donationPaymentEntity.setMenuPrice(menuDTO.getDonationAmount());
             donationPaymentEntity.setMenu(menuEntity.get());
             donationPaymentEntity.setUser(userEntity);
+            donationPaymentEntity.setUse(false);
 
             // 금액관리
             Optional<CardEntity> cardEntity = cardRepository.findByUser(userEntity);

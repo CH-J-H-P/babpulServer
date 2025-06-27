@@ -22,6 +22,7 @@ public class DonationEntity {
     @Column(nullable = false)
     private int money;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userKey", nullable = false)
     private UserEntity user;
