@@ -3,6 +3,7 @@ package com.example.babpulServer.controller;
 
 import com.example.babpulServer.DTO.DonationDTO;
 import com.example.babpulServer.DTO.DonationMenuDTO;
+import com.example.babpulServer.DTO.DonationPaymentDTO;
 import com.example.babpulServer.DTO.DonationReceiptDTO;
 import com.example.babpulServer.Entity.DonationPaymentEntity;
 import com.example.babpulServer.service.DonationService;
@@ -54,4 +55,17 @@ public class DonationController {
         return ResponseEntity.ok(receipts);
     }
 
+
+    @GetMapping("/donation/used")
+    public ResponseEntity<List<DonationPaymentDTO>> getUsedPaymentsBySessionKey(@RequestParam String sessionKey) {
+        List<DonationPaymentDTO> dtos = donationService.getUsedPaymentsBySessionKey(sessionKey);
+        return ResponseEntity.ok(dtos);
+    }
+
+    // sessionKey로 유저의 미사용 결제내역 조회 (use=false)
+    @GetMapping("/donation/unused")
+    public ResponseEntity<List<DonationPaymentDTO>> getUnusedPaymentsBySessionKey(@RequestParam String sessionKey) {
+        List<DonationPaymentDTO> dtos = donationService.getUnusedPaymentsBySessionKey(sessionKey);
+        return ResponseEntity.ok(dtos);
+    }
 }

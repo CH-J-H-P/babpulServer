@@ -151,6 +151,35 @@ public class DonationService {
         return donationReceipt;
     }
 
+// sessionKey로 유저의 사용 결제내역 조회 (use=true)
+    public List<DonationPaymentDTO> getUsedPaymentsBySessionKey(String sessionKey) {
+        Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(sessionKey);
+        if (userSessionEntity.isEmpty()) {
+            throw new RuntimeException("유효하지 않은 세션입니다.");
+        }
+        UserEntity user = userSessionEntity.get().getUser();
+        List<DonationPaymentEntity> entities = donationPaymentRepository.findByUserAndUse(user, true);
+        return toDTOList(entities);
+    }
 
+    // sessionKey로 유저의 미사용 결제내역 조회 (use=false)
+    public List<DonationPaymentDTO> getUnusedPaymentsBySessionKey(String sessionKey) {
+        Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(sessionKey);
+        if (userSessionEntity.isEmpty()) {
+            throw new RuntimeException("유효하지 않은 세션입니다.");
+        }
+        UserEntity user = userSessionEntity.get().getUser();
+        List<DonationPaymentEntity> entities = donationPaymentRepository.findByUserAndUse(user, false);
+        return toDTOList(entities);
+    }
+
+    // Entity 리스트를 DTO 리스트로 변환하는 함수
+    private List<DonationPaymentDTO> toDTOList(List<DonationPaymentEntity> entities) {
+        List<DonationPaymentDTO> dtos = new ArrayList<>();
+        for (DonationPaymentEntity entity : entities) {
+            dtos.add(DonationPaymentDTO.fromEntity(entity));
+        }
+        return dtos;
+    }
 }
 

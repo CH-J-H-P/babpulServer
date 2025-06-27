@@ -10,4 +10,5 @@ import java.util.List;
 public interface DonationPaymentRepository extends JpaRepository<DonationPaymentEntity,Long> {
     List<DonationPaymentEntity> findByOrderNumber(String orderNumber);
     List<DonationPaymentEntity> findByUser(UserEntity userEntity);
+    List<DonationPaymentEntity> findByUserAndUse(UserEntity user, boolean use);
 }
