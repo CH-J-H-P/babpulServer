@@ -72,7 +72,6 @@ public class DonationService {
         for(DonationEntity donationEntity1 : donationEntity){
             DonationDTO donationDTO = new DonationDTO();
             donationDTO.setMoney(donationEntity1.getMoney());
-            donationDTO.setDonationDate(donationEntity1.getDonationDate());
 
             donationDTOs.add(donationDTO);
         }
