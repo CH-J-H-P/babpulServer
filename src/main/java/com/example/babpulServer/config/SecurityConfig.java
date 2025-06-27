@@ -18,7 +18,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/user/signup", "/user/login", "/user/auto/login"
-                                        , "/card/save").permitAll()
+                                        , "/card/save", "/restaurant/list", "/donation/save").permitAll()
                                 .anyRequest().permitAll()
                         //authenticated()로 하면 설정한 것 이외의 요청은 인증 필요
                 );

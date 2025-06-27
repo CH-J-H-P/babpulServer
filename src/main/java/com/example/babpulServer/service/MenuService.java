@@ -37,7 +37,7 @@ public class MenuService {
         List<MenuDTO> menuDTOs = new ArrayList<>();
         for (MenuEntity menu : menus) {
             MenuDTO menuDTO = new MenuDTO();
-            menuDTO.toDTO(menu);
+            menuDTO = menuDTO.toDTO(menu);
             menuDTOs.add(menuDTO);
         }
 

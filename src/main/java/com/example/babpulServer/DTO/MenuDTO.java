@@ -31,7 +31,7 @@ public class MenuDTO {
     }
 
     // Entity-> DTO 변환 메서드
-    public static MenuDTO toDTO(MenuEntity menuEntity) {
+    public MenuDTO toDTO(MenuEntity menuEntity) {
         return MenuDTO.builder()
                 .menuName(menuEntity.getMenuName())
                 .menuDescription(menuEntity.getMenuDescription())

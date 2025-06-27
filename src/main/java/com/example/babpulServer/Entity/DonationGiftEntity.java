@@ -35,6 +35,10 @@ public class DonationGiftEntity {
     @JoinColumn(name = "UserKey")
     private UserEntity donor; // 유저(수혜자) 엔티티 연결, null 허용
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private MenuEntity menu; // 메뉴 Entity
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DonationState donationState = DonationState.UNUSED; // 상태(사용전, 예약, 사용완료), 기본으로 사용전 설정

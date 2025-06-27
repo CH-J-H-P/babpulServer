@@ -6,9 +6,9 @@ spring:
     locations: classpath:db/migration
     baseline-on-migrate: true
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://babpul-server.mysql.database.azure.com:3306/babpul_db?serverTimezone=UTC&characterEncoding=UTF-8
+    username: babpul
+    password: 852456dkssud@
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
@@ -35,4 +35,9 @@ logging:
 server:
   address: 0.0.0.0
   port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 

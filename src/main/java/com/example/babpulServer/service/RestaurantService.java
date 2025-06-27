@@ -31,7 +31,7 @@ public class RestaurantService {
         List<RestaurantDTO> allRestaurtantDTOs = new ArrayList<>();
         for (RestaurantEntity restaurantEntity : allRestaurants) {
             RestaurantDTO restaurantDTO = new RestaurantDTO();
-            restaurantDTO.fromEntity(restaurantEntity);
+            restaurantDTO = restaurantDTO.fromEntity(restaurantEntity);
             allRestaurtantDTOs.add(restaurantDTO);
         }
 

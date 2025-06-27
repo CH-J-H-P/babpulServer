@@ -7,10 +7,7 @@ import com.example.babpulServer.service.DonationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -22,7 +19,7 @@ import java.util.UUID;
 public class DonationController {
     final private DonationService donationService;
 
-    @PostMapping("/donation/order")
+    @PostMapping("/donation/save")
     public ResponseEntity<Void> donationOrder(@RequestBody DonationMenuDTO donationMenuDTO){
 
         DonationMenuEntity donationMenuEntity = new DonationMenuEntity();

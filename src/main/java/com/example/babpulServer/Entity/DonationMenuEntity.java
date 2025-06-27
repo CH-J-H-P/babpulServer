@@ -28,7 +28,7 @@ public class DonationMenuEntity {
     private int totalPrice; // 메뉴별 총 금액(기부 금액 기준)
 
     @Column(nullable = false)
-    private int MenuPrice; // 메뉴 단일가격(기부 금액 기준)
+    private int menuPrice; // 메뉴 단일가격(기부 금액 기준)
 
 
     @ManyToOne(fetch = FetchType.LAZY)

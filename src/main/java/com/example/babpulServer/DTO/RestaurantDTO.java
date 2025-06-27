@@ -33,7 +33,7 @@ public class RestaurantDTO {
     }
 
     // Entity -> DTO 변환 메서드
-    public static RestaurantDTO fromEntity(RestaurantEntity restaurantEntity) {
+    public RestaurantDTO fromEntity(RestaurantEntity restaurantEntity) {
         return RestaurantDTO.builder()
                 .restaurantKey(restaurantEntity.getRestaurantKey())
                 .restaurantName(restaurantEntity.getRestaurantName())

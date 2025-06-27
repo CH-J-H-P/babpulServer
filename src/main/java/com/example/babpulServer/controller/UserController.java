@@ -72,8 +72,8 @@ public class UserController {
     }
 
     @PostMapping("/user/auto/login")
-    public ResponseEntity<String> autoLogin(@RequestBody UserSessionDTO userSessionDTO){
-        Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(userSessionDTO.getSessionKey());
+    public ResponseEntity<String> autoLogin(@RequestBody String sessionKey){
+        Optional<UserSessionEntity> userSessionEntity = userSessionRepository.findBySessionKey(sessionKey);
         if(userSessionEntity.isEmpty()){
             // 401 Unauthorized 반환
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

@@ -1,17 +1,18 @@
 package com.example.babpulServer.service;
 
+import com.example.babpulServer.DTO.DonationGiftDTO;
 import com.example.babpulServer.DTO.DonationMenuDTO;
+import com.example.babpulServer.DTO.DonationReceiptDTO;
 import com.example.babpulServer.Entity.DonationGiftEntity;
 import com.example.babpulServer.Entity.DonationMenuEntity;
+import com.example.babpulServer.Entity.MenuEntity;
 import com.example.babpulServer.Entity.UserEntity;
-import com.example.babpulServer.repository.DonationGiftRepository;
-import com.example.babpulServer.repository.DonationMenuRepository;
-import com.example.babpulServer.repository.RestaurantReository;
-import com.example.babpulServer.repository.UserSessionRepository;
+import com.example.babpulServer.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +22,7 @@ public class DonationService {
     private final RestaurantReository restaurantReository;
     private final DonationMenuRepository donationMenuRepository;
     private final DonationGiftRepository donationGiftRepository;
+    private final MenuRepository menuRepository;
 
     // 기부내역 남기기 + 기프티콘 생성
     public void saveDonationMenu(DonationMenuDTO donaDTO, String orderNumber, LocalDate orderDate) {
@@ -45,7 +47,8 @@ public class DonationService {
                 DonationGiftEntity donationGiftEntity = new DonationGiftEntity();
                 donationGiftEntity.setDonor(donor);
                 donationGiftEntity.setMenuName(menuDTO.getMenuName());
-                donationGiftEntity.setDonationMenu(donationMenuEntity); // 외래키 연관관계 설정
+                donationGiftEntity.setMenu(menuRepository.findByMenuKey(menuDTO.getMenuKey()).get());
+                donationGiftEntity.setDonationMenu(donationMenuEntity); // 기부내역 외래키
                 donationGiftRepository.save(donationGiftEntity);
             }
         }
@@ -54,10 +57,31 @@ public class DonationService {
     // 전체 기부내역 보여주기
 
 
-    // 영수증 주기
+//    // 기부내역 상세 보여주기
+//    public DonationReceiptDTO getDonationReceipt(String orderNumber) {
+//        // 1. 데이터 조회
+//        List<DonationMenuEntity> dmList = donationMenuRepository.findByOrderNumber(orderNumber);
+//
+//        // 반환할 데이터 불러오기
+//        DonationReceiptDTO donationReceipt = new DonationReceiptDTO();
+//        List<DonationReceiptDTO.MenuDTO> menuDTOList = new ArrayList<>();
+//
+//        // 공통 데이터 뽑기(주문일자)
+//        donationReceipt.setOrderDate(dmList.get(0).getOrderDate());
+//
+//        // 총기부금액, 기부 리스트 가져오기
+//        int totalAmount = 0;
+//        for (DonationMenuEntity dmEntity : dmList) {
+//            DonationReceiptDTO.MenuDTO menuDTO = DonationReceiptDTO.MenuDTO.builder()
+//                    .menuName(dmEntity.)
+//                    .quantity(dmEntity.getTotalPrice() / dmEntity.getMenuPrice())
+//                    .donationAmount(dmEntity.getTotalPrice())
+//                    .build();
+//        }
+//    }
 
 
-    // 기프티콘 DTO 주기
+    // 기프티콘 사용내역 보여주기
 
     // 기프티콘을 사용한 경우
 }

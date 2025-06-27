@@ -22,6 +22,7 @@ public class DonationMenuDTO {
     @Builder
     public static class MenuDTO {
         private String menuName;    // 메뉴명
+        private Long menuKey;       // 메뉴 기본키
         private int quantity;       // 수량
         private int donationAmount; // 기부금액
     }
