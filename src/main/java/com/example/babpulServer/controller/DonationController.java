@@ -23,21 +23,10 @@ public class DonationController {
     @PostMapping("/donation/payment")
     public ResponseEntity<Void> donationOrder(@RequestBody DonationMenuDTO donationMenuDTO){
 
-        DonationPaymentEntity donationPaymentEntity = new DonationPaymentEntity();
-        String orderNumber = UUID.randomUUID().toString();
-        LocalDate orderDate = LocalDate.now();
-
-        // 음식의 종류별로 주문기록과 기프티콘을 만들어야함
-        // 1. 기부내역 남기기
-        // 2. 기프티콘 만들기
-        donationService.saveDonationMenu(donationMenuDTO, orderNumber,orderDate);
+        donationService.donationPay(donationMenuDTO);
         return ResponseEntity.ok().build();
     }
 
     // 기부내역 상세 확인
-    @GetMapping("/donation/receipt/{orderNumber}")
-    public ResponseEntity<DonationReceiptDTO> getDonationReceipt(@PathVariable String orderNumber){
-        DonationReceiptDTO receipt = donationService.getDonationReceipt(orderNumber);
-        return ResponseEntity.ok().body(receipt);
-    }
+
 }

@@ -14,6 +14,8 @@ public class DonationMenuDTO {
     private String sessionKey;         // 세션키
     private String address;      // 주소
     private List<MenuDTO> menus; // 메뉴 배열
+    private int cardMoney;
+    private int componyMoney;
 
     @Getter
     @Setter
