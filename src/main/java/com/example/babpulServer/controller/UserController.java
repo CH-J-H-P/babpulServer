@@ -48,24 +48,28 @@ public class UserController {
                                       HttpServletResponse response){
         System.out.println(userDTO.toString());
         UserEntity userEntity = userService.login(userDTO);
-        if(userEntity == null){
+        if(userEntity == null){ // case: null 요청이 들어온경우, do: 400 Bad Request
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+        // case: 올바른 요청인 경우, do: 로그인 허용과 함께 세션 반환
         UserSessionEntity userSessionEntity = userSessionService.createSession(session, userEntity);
 
-        // SameSite=None; Secure 적용된 쿠키 직접 헤더로 세팅
-        String sessionCookie = "sessionKey=" + userSessionEntity.getSessionKey() +
-                "; Path=/; HttpOnly; Secure; SameSite=None";
-        String roleCookie = "userRole=" + userEntity.getUserRole().name() +
-                "; Path=/; Secure; SameSite=None";
+        // 세션키
+        Cookie sessionCookie = new Cookie("sessionKey", userSessionEntity.getSessionKey());
+        sessionCookie.setPath("/"); // 사이트의 모든 경로에서 쿠키가 유효하도록 설정
 
-        response.addHeader("Set-Cookie", sessionCookie);
-        response.addHeader("Set-Cookie", roleCookie);
+        // 유저역할
+        Cookie userRoleCookie = new Cookie("userRole", userEntity.getUserRole().name());
+        userRoleCookie.setPath("/");
 
+
+        response.addCookie(sessionCookie); // 응답에 쿠키를 추가
+        response.addCookie(userRoleCookie);
+
+        // 세션정보를 DB에 저장하고 ok 코드 응답
         userSessionService.sessionSave(userSessionEntity);
         return ResponseEntity.ok().build();
     }
-
 
     @PostMapping("/user/auto/login")
     public ResponseEntity<String> autoLogin(@RequestBody String sessionKey){
