@@ -29,7 +29,7 @@ public class DonationPaymentDTO {
                 .orderNumber(entity.getOrderNumber())
                 .orderDate(entity.getOrderDate())
                 .menuPrice(entity.getMenuPrice())
-                .use(entity.isUse())
+                .use(entity.isUsed())
                 .menuKey(entity.getMenu().getMenuKey())
                 .menuName(entity.getMenu().getMenuName())
                 .userKey(entity.getUser().getUserKey())
@@ -43,7 +43,7 @@ public class DonationPaymentDTO {
                 .orderNumber(this.orderNumber)
                 .orderDate(this.orderDate)
                 .menuPrice(this.menuPrice)
-                .use(this.use)
+                .used(this.use)
                 .menu(menu)
                 .user(user)
                 .build();
