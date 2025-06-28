@@ -32,7 +32,6 @@ public class DonationPaymentDTO {
                 .use(entity.isUse())
                 .menuKey(entity.getMenu().getMenuKey())
                 .menuName(entity.getMenu().getMenuName())
-                .state(entity.getState())
                 .userKey(entity.getUser().getUserKey())
                 .build();
     }
@@ -46,7 +45,6 @@ public class DonationPaymentDTO {
                 .menuPrice(this.menuPrice)
                 .use(this.use)
                 .menu(menu)
-                .state(this.state)
                 .user(user)
                 .build();
     }
