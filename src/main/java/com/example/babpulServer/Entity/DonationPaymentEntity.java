@@ -29,7 +29,7 @@
         private int menuPrice;
 
         @Column(nullable = false)
-        private boolean use;
+        private boolean used;
 
 
         @ManyToOne(fetch = FetchType.LAZY)
