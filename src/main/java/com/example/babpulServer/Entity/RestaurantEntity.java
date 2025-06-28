@@ -16,13 +16,13 @@ public class RestaurantEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long restaurantKey; // 기본키
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String restaurantName; // 식당명
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String restaurantAddress; // 식당 주소
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String category; // 카테고리(분식, 중식 등등)
 
     @Column(nullable = false)
