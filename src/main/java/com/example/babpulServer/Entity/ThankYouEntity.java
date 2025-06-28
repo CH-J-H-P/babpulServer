@@ -27,6 +27,6 @@ public class ThankYouEntity {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "userKey", nullable = false)
     private UserEntity user; // 수혜자 정보
 }
