@@ -159,7 +159,7 @@ public class DonationService {
             throw new RuntimeException("유효하지 않은 세션입니다.");
         }
         UserEntity user = userSessionEntity.get().getUser();
-        List<DonationPaymentEntity> entities = donationPaymentRepository.findByUserAndUse(user, true);
+        List<DonationPaymentEntity> entities = donationPaymentRepository.findByUserAndUsed(user, true);
         return toDTOList(entities);
     }
 
@@ -170,7 +170,7 @@ public class DonationService {
             throw new RuntimeException("유효하지 않은 세션입니다.");
         }
         UserEntity user = userSessionEntity.get().getUser();
-        List<DonationPaymentEntity> entities = donationPaymentRepository.findByUserAndUse(user, false);
+        List<DonationPaymentEntity> entities = donationPaymentRepository.findByUserAndUsed(user, false);
         return toDTOList(entities);
     }
 
